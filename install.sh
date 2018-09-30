@@ -33,7 +33,6 @@ function compile_vim_and_install()
 
 function compile_fasd_and_install()
 {
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     git clone https://github.com/clvv/fasd.git ~/fasdxyz
     cd ~/fasdxyz
     make
@@ -41,13 +40,21 @@ function compile_fasd_and_install()
     cd -
 }
 
+function install_oh_my_zsh()
+{
+
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+    echo "change default bash to zsh"
+    chsh -s $(which zsh)
+    echo "logout and come back"
+}
+
 function install_package()
 {
     sudo apt-get install -y ctags build-essential cmake python-dev python3-dev fontconfig curl libfile-next-perl ack-grep 
-    sudo apt-get install -y tmux silversearcher-ag zsh awesome
+    sudo apt-get install -y tmux silversearcher-ag zsh awesome fonts-powerline
     
-    # chsh -s $(which zsh)
-
     compile_vim_and_install
 
     compile_fasd_and_install
@@ -103,13 +110,12 @@ function compile_ycm_on_linux()
 
 function install_xyzvim()
 {
-    install_package
+   install_package
     copy_files
     install_fonts
     install_vim_plugin
     compile_ycm_on_linux
-
-    chsh -s $(which zsh)
+    install_oh_my_zsh
 }
 
 install_xyzvim
