@@ -1,2 +1,5 @@
 set relativenumber  " 开启相对行号
 
+
+" remap <c-]>
+nnoremap <c-m> <C-]>
